@@ -1,5 +1,7 @@
 package xsd
 
+import "time"
+
 // AnyURI represent a URI (Uniform Resource Identifier)
 //
 // <xsd:simpleType name="anyURI" id="anyURI">
@@ -11,6 +13,21 @@ type AnyURI string
 
 func (o AnyURI) MarshalText() ([]byte, error) {
 	s := WhiteSpaceCollapse(string(o))
+	return []byte(s), nil
+}
+
+// Date represent a gregorian calendar date
+//
+// <xsd:simpleType name="date" id="date">
+//  <xsd:restriction base="xsd:anySimpleType">
+//   <xsd:whiteSpace value="collapse" fixed="true"/>
+//  </xsd:restriction>
+// </xsd:simpleType>
+type Date time.Time
+
+func (o Date) MarshalText() ([]byte, error) {
+	t := time.Time(o)
+	s := t.Format("2006-01-02")
 	return []byte(s), nil
 }
 
